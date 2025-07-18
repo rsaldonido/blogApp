@@ -18,7 +18,7 @@ export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
     e.preventDefault();
     setIsLoading(true);
 
-    fetch('http://localhost:4000/blogs', {
+    fetch('https://blogapp-api-eezt.onrender.com/blogs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

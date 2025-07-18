@@ -27,7 +27,7 @@ export default function EditBlogModal({ show, handleClose, blog, fetchBlogs }) {
     e.preventDefault();
     setIsLoading(true);
 
-    fetch(`http://localhost:4000/blogs/${blog._id}`, {
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/${blog._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

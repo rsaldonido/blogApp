@@ -19,7 +19,7 @@ export default function BlogDetails() {
     setIsLoading(true);
     setError(null);
 
-    fetch(`http://localhost:4000/blogs/${id}`)
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/${id}`)
       .then(res => res.json())
       .then(data => {
         if (data._id) {
@@ -33,7 +33,7 @@ export default function BlogDetails() {
   };
 
   const fetchComments = () => {
-    fetch(`http://localhost:4000/blogs/${id}/comments`)
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/${id}/comments`)
       .then(res => res.json())
       .then(data => {
         setComments(data);

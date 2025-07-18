@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
-          fetch('http://localhost:4000/users/profile', {
+          fetch('https://blogapp-api-eezt.onrender.com/users/profile', {
               headers: {
                   'Authorization': `Bearer ${token}`
               }

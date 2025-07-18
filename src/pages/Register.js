@@ -17,7 +17,7 @@ const registerUser = (e) => {
   e.preventDefault();
   setIsLoading(true);
 
-  fetch('http://localhost:4000/users/register', {
+  fetch('https://blogapp-api-eezt.onrender.com/users/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

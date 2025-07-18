@@ -8,9 +8,9 @@ export default function Home() {
 
   return (
     <Container className="mt-5 text-center">
-      <h1>Welcome to Blog Application</h1>
+      <h1>Welcome to Vox Wall</h1>
       <p className="lead">
-        Read and share your thoughts with the community
+        Your Wall, Your Vox
       </p>
       {user.id ? (
         <Button as={Link} to="/blogs" variant="primary" size="lg">

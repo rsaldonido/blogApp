@@ -18,7 +18,7 @@ export default function CommentSection({ blogId, comments, fetchComments, blogAu
 
     setIsLoading(true);
 
-    fetch(`http://localhost:4000/blogs/comments/${blogId}`, {
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/comments/${blogId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default function CommentSection({ blogId, comments, fetchComments, blogAu
       return;
     }
 
-    fetch(`http://localhost:4000/blogs/comments/${commentId}`, {
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/comments/${commentId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -84,7 +84,7 @@ export default function CommentSection({ blogId, comments, fetchComments, blogAu
 
     setIsLoading(true);
 
-    fetch(`http://localhost:4000/blogs/comments/${commentId}`, {
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/comments/${commentId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
