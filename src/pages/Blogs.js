@@ -15,7 +15,7 @@ export default function Blogs() {
 
   const fetchBlogs = () => {
     setIsLoading(true);
-    fetch('http://localhost:4000/blogs')
+    fetch('https://blogapp-api-eezt.onrender.com/blogs')
       .then(res => res.json())
       .then(data => {
         setBlogs(data);

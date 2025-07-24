@@ -20,7 +20,7 @@ export default function MyBlogs() {
 
   const fetchBlogs = () => {
     setIsLoading(true);
-    fetch(`http://localhost:4000/blogs/myblogs`, {
+    fetch(`https://blogapp-api-eezt.onrender.com/blogs/myblogs`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -42,7 +42,7 @@ export default function MyBlogs() {
 
   const deleteBlog = (blogId) => {
     if (window.confirm('Are you sure you want to delete this blog?')) {
-      fetch(`http://localhost:4000/blogs/${blogId}`, {
+      fetch(`https://blogapp-api-eezt.onrender.com/blogs/${blogId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

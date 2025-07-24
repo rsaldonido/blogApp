@@ -15,7 +15,7 @@ export default function AdminView({ blogs, fetchBlogs, searchTerm, setSearchTerm
 
   const deleteBlog = (blogId) => {
     if (window.confirm('Are you sure you want to delete this blog?')) {
-      fetch(`http://localhost:4000/blogs/${blogId}`, {
+      fetch(`https://blogapp-api-eezt.onrender.com/blogs/${blogId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
