@@ -31,7 +31,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          A modern platform to share your thoughts, stories, and ideas with the world.
+          Blogging Just Got Sweeter.
         </motion.p>
         
         {user.id ? (
