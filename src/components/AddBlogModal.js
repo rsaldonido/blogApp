@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { Notyf } from 'notyf';
+import { motion } from 'framer-motion';
+import UserContext from '../context/UserContext';
+import '../styles/AddBlogModal.css';
+
 
 export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
   const [formData, setFormData] = useState({
@@ -8,7 +11,7 @@ export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
     content: ''
   });
   const [isLoading, setIsLoading] = useState(false);
-  const notyf = new Notyf();
+  const { notyf } = useContext(UserContext);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +21,7 @@ export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
     e.preventDefault();
     setIsLoading(true);
 
-    fetch('https://blogapp-api-eezt.onrender.com/blogs', {
+    fetch('http://localhost:4000/blogs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,17 +40,21 @@ export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
         notyf.error(data.message || 'Failed to create blog');
       }
     })
+    .catch(err => {
+      notyf.error('Failed to create blog');
+      console.error('Error:', err);
+    })
     .finally(() => setIsLoading(false));
   };
 
   return (
-    <Modal show={show} onHide={handleClose} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>Add New Blog</Modal.Title>
+    <Modal show={show} onHide={handleClose} size="lg" centered className="add-blog-modal">
+      <Modal.Header closeButton className="border-0 pb-0">
+        <Modal.Title className="modal-title">Create New Blog</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="pt-0">
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
+          <Form.Group className="form-group">
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
@@ -55,10 +62,12 @@ export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
               value={formData.title}
               onChange={handleChange}
               required
+              className="form-input"
+              placeholder="Enter blog title"
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="form-group">
             <Form.Label>Content</Form.Label>
             <Form.Control
               as="textarea"
@@ -67,12 +76,33 @@ export default function AddBlogModal({ show, handleClose, fetchBlogs }) {
               value={formData.content}
               onChange={handleChange}
               required
+              className="form-textarea"
+              placeholder="Write your blog content here..."
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create Blog'}
-          </Button>
+          <div className="modal-footer-buttons">
+            <motion.div whileHover={{ scale: 1.02 }}>
+              <Button 
+                variant="outline-secondary" 
+                onClick={handleClose}
+                className="cancel-btn"
+                disabled={isLoading}
+              >
+                Cancel
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.02 }}>
+              <Button 
+                variant="primary" 
+                type="submit" 
+                disabled={isLoading}
+                className="submit-btn"
+              >
+                {isLoading ? 'Creating...' : 'Create Blog'}
+              </Button>
+            </motion.div>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

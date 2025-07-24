@@ -1,25 +1,25 @@
-// BlogDetails.js
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Button, Badge, Spinner, Alert } from 'react-bootstrap';
-import { Notyf } from 'notyf';
+import { motion } from 'framer-motion';
 import UserContext from '../context/UserContext';
 import CommentSection from '../components/CommentSection';
+import '../styles/BlogDetails.css';
 
 export default function BlogDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
-  const notyf = new Notyf();
 
   const fetchBlogAndComments = () => {
     setIsLoading(true);
     setError(null);
 
-    fetch(`https://blogapp-api-eezt.onrender.com/blogs/${id}`)
+    fetch(`http://localhost:4000/blogs/${id}`)
       .then(res => res.json())
       .then(data => {
         if (data._id) {
@@ -29,14 +29,21 @@ export default function BlogDetails() {
           setError('Blog not found');
           setIsLoading(false);
         }
+      })
+      .catch(err => {
+        setError('Failed to fetch blog');
+        setIsLoading(false);
       });
   };
 
   const fetchComments = () => {
-    fetch(`https://blogapp-api-eezt.onrender.com/blogs/${id}/comments`)
+    fetch(`http://localhost:4000/blogs/${id}/comments`)
       .then(res => res.json())
       .then(data => {
         setComments(data);
+        setIsLoading(false);
+      })
+      .catch(err => {
         setIsLoading(false);
       });
   };
@@ -47,53 +54,80 @@ export default function BlogDetails() {
 
   if (isLoading) {
     return (
-      <Container className="d-flex justify-content-center mt-5">
-        <Spinner animation="border" />
+      <Container className="loading-container">
+        <Spinner animation="border" variant="primary" />
       </Container>
     );
   }
 
   if (error) {
     return (
-      <Container className="mt-5">
-        <Alert variant="danger">
-          {error}
-          <br />
-          <Button variant="outline-primary" onClick={() => window.history.back()}>
-            Go Back
-          </Button>
+      <Container className="error-container">
+        <Alert variant="danger" className="error-alert shadow-sm">
+          <Alert.Heading>{error}</Alert.Heading>
+          <div className="mt-3">
+            <Button 
+              variant="outline-primary" 
+              onClick={() => navigate(-1)}
+              className="back-btn"
+            >
+              <i className="bi bi-arrow-left me-2"></i> Go Back
+            </Button>
+          </div>
         </Alert>
       </Container>
     );
   }
 
   return (
-    <Container className="mt-5">
+    <Container className="blog-details-container">
       {blog && (
-        <>
-          <div className="d-flex mb-4">
-            <Button variant="outline-secondary" href="/blogs" className="me-2">
-              Back to Blogs
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="navigation-buttons mb-4">
+            <Button 
+              variant="outline-secondary" 
+              onClick={() => navigate('/blogs')} 
+              className="back-btn"
+            >
+              <i className="bi bi-arrow-left me-2"></i> Back to Blogs
             </Button>
             {user.id === blog.author?._id && (
-              <Button variant="outline-primary" href={`/my-blogs`} className="me-2">
-                My Blogs
+              <Button 
+                variant="outline-primary" 
+                onClick={() => navigate('/my-blogs')}
+                className="my-blogs-btn"
+              >
+                <i className="bi bi-collection me-2"></i> My Blogs
               </Button>
             )}
           </div>
 
-          <Card className="mb-4">
+          <Card className="blog-content-card shadow-sm mb-5">
             <Card.Body>
-              <Card.Title className="display-5">{blog.title}</Card.Title>
-              <Card.Subtitle className="mb-3 text-muted">
-                By {blog.author?.username || 'Unknown'} on {new Date(blog.createdAt).toLocaleDateString()}
-              </Card.Subtitle>
-              {blog.updatedAt && (
-                <Badge bg="info" className="mb-3">
-                  Updated: {new Date(blog.updatedAt).toLocaleDateString()}
+              <Card.Title className="blog-title mb-3">{blog.title}</Card.Title>
+              
+              <div className="d-flex align-items-center mb-4">
+                <Badge bg="light" text="dark" className="me-3">
+                  <i className="bi bi-person-fill me-1"></i>
+                  {blog.author?.username || 'Unknown'}
                 </Badge>
-              )}
-              <Card.Text className="lead" style={{ whiteSpace: 'pre-line' }}>
+                <Badge bg="light" text="dark" className="me-3">
+                  <i className="bi bi-calendar me-1"></i>
+                  {new Date(blog.createdAt).toLocaleDateString()}
+                </Badge>
+                {blog.updatedAt && (
+                  <Badge bg="light" text="dark">
+                    <i className="bi bi-arrow-repeat me-1"></i>
+                    Updated: {new Date(blog.updatedAt).toLocaleDateString()}
+                  </Badge>
+                )}
+              </div>
+              
+              <Card.Text className="blog-text">
                 {blog.content}
               </Card.Text>
             </Card.Body>
@@ -105,7 +139,7 @@ export default function BlogDetails() {
             fetchComments={fetchComments}
             blogAuthorId={blog.author?._id}
           />
-        </>
+        </motion.div>
       )}
     </Container>
   );

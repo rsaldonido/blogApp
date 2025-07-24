@@ -1,10 +1,10 @@
-// Blogs.js
 import { useState, useEffect, useContext } from 'react';
 import { Spinner, Form, Button } from 'react-bootstrap';
-import { Notyf } from 'notyf';
+import { toast } from 'react-toastify';
 import UserContext from '../context/UserContext';
 import AdminView from '../components/AdminView';
 import UserView from '../components/UserView';
+import '../styles/Blogs.css';
 
 export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
@@ -12,18 +12,17 @@ export default function Blogs() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
   const { user } = useContext(UserContext);
-  const notyf = new Notyf();
 
   const fetchBlogs = () => {
     setIsLoading(true);
-    fetch('https://blogapp-api-eezt.onrender.com/blogs')
+    fetch('http://localhost:4000/blogs')
       .then(res => res.json())
       .then(data => {
         setBlogs(data);
         setIsLoading(false);
       })
       .catch(err => {
-        notyf.error('Failed to fetch blogs');
+        toast.error('Failed to fetch blogs');
         setIsLoading(false);
       });
   };
@@ -45,7 +44,7 @@ export default function Blogs() {
 
   if (isLoading) {
     return (
-      <div className="d-flex justify-content-center mt-5">
+      <div className="blogs-loading-container">
         <Spinner animation="border" />
       </div>
     );

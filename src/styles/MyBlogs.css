@@ -1,0 +1,124 @@
+.myblogs-container {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.myblogs-loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.myblogs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.myblogs-header h2 {
+  font-weight: 700;
+  color: var(--dark-color);
+  margin: 0;
+  font-family: var(--font-serif);
+}
+
+.add-blog-btn {
+  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.add-blog-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+}
+
+.myblogs-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-input {
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 300px;
+  max-width: 100%;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+}
+
+.sort-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sort-btn {
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.blogs-grid {
+  margin-top: 1rem;
+}
+
+.blog-col {
+  margin-bottom: 1.5rem;
+}
+
+.blog-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  flex: 1;
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-blogs-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--dark-color);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .myblogs-controls {
+    flex-direction: column;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  .sort-buttons {
+    justify-content: flex-start;
+  }
+}
