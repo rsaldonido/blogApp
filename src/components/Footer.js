@@ -22,7 +22,7 @@ export default function Footer() {
                 <i className="bi bi-pen me-2"></i>
                 <span className="gradient-text">Blogsicle</span>
               </h5>
-              <p className="text-muted">Share your thoughts with the world</p>
+              <p className="text-muted">Blogging Just Got Sweeter.</p>
             </motion.div>
           </Col>
           
