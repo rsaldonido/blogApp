@@ -17,7 +17,7 @@ export default function AppNavbar() {
             whileHover={{ scale: 1.05 }}
             className="d-flex align-items-center"
           >
-            <i className="bi bi-pen me-2"></i>
+            <i className="bi me-2"></i>
             <span className="text-dark">Blogsicle</span>
           </motion.span>
         </Navbar.Brand>
